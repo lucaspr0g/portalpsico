@@ -1,0 +1,38 @@
+﻿@page "/psicologos/cadastro"
+@using MediatR
+@using Front.Components
+@inject IMediator mediator
+
+<h3>Cadastro de Psicologo</h3>
+
+<DangerAlert Message="@_error" ShowAlert="@_showErrorAlert"></DangerAlert>
+<SuccessAlert Message="@_message" ShowAlert="@_showSuccessAlert"></SuccessAlert>
+<Loading IsLoading="isProcessing"></Loading>
+ 
+<div class="row">
+	<input type="text" @bind="@Nome" placeholder="Nome" class="form-control" />
+</div>
+<div class="row">
+	<input type="email" @bind="@Email" placeholder="Email" class="form-control" />
+</div>
+<div class="row">
+	<select @bind="@Estado" class="form-control">
+		<StateSelectOptions></StateSelectOptions>
+    </select>
+</div>
+<div class="row">
+	<input type="text" @bind="@CRP" placeholder="CRP" class="form-control" />
+</div>
+<div class="row">
+	<input type="text" @bind="@Abordagem" placeholder="Abordagem" class="form-control" />
+</div>
+<div class="row">
+	<input type="text" @bind="@Descricao" placeholder="Descricao" class="form-control" />
+</div>
+<div class="row">
+	AprovadoEPSI? <input type="checkbox" @bind="AprovadoEPSI" />
+</div>
+
+<br />
+
+<button @onclick="Add">Cadastrar</button>

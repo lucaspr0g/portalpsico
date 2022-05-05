@@ -1,0 +1,35 @@
+﻿@using Application.Queries.Psychologist.Search
+@using Domain.Entities
+@using MediatR
+@inject IMediator mediator
+
+@if (Psicologos is null || Psicologos.Count == 0)
+{
+	<p>nao achou nada</p>
+}
+else
+{
+	var url = "https://scontent.fcpq17-1.fna.fbcdn.net/v/t39.30808-6/242507091_1447246395643463_892901407451365834_n.jpg?_nc_cat=109&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=Zlio1Nsqd5UAX-bZSbm&tn=8XGsKywWcdMD-RVd&_nc_ht=scontent.fcpq17-1.fna&oh=00_AT8SB3HClsSBS974kvUfLM-m5VDzaoThhRwAn70qKjIZow&oe=626B6208";
+	
+	@foreach (var psicologo in Psicologos)
+	{
+		<div class="col-12 col-md-4 mt-2 mt-md-0">
+			<div class="card" style="width: 18rem;">
+				<img src="@url" class="card-img-top" alt="...">
+				<div class="card-body">
+					<h5 class="card-title"><b>@psicologo.Nome</b></h5>
+					<p class="card-text">
+						<b>Abordagem: </b>@psicologo.Abordagem <br />
+						<b>Estado: </b>@psicologo.Estado
+					</p>
+					<a href="/psicologos/@psicologo.PsicologoId" class="btn btn-primary">Mais informações</a>
+				</div>
+			</div>
+		</div>
+	}
+}
+
+@code {
+	[Parameter]
+	public List<Psicologo>? Psicologos { get; set; }
+}

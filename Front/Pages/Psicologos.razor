@@ -1,0 +1,17 @@
+﻿@page "/psicologos/{psicologoId}"
+@using MediatR
+@inject IMediator mediator
+@inject NavigationManager navManager
+
+@if (_psicologo != null)
+{
+	<h3>@_psicologo.Nome</h3>
+	<br />
+	<br />
+	<h3>Descrição</h3>
+	<h3>@_psicologo.Descricao</h3>
+	<br />
+	<br />
+	<h3>Horários disponíveis</h3>
+
+}
