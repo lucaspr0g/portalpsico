@@ -1,5 +1,6 @@
 ﻿using Application.Exceptions;
 using Application.Interfaces;
+using Application.Validations.Psychologist;
 using Domain.Entities;
 using MediatR;
 
@@ -18,6 +19,9 @@ namespace Application.Commands.Psychologist
 		{
 			if (request.NewPsychologist is null)
 				throw new InvalidRequestException("Invalid request");
+
+			var validator = new NewPsychologistValidator();
+			validator.Validate(request.NewPsychologist);
 
 			if (string.IsNullOrWhiteSpace(request.NewPsychologist.Nome))
 				throw new InvalidRequestException("Preencha o nome");

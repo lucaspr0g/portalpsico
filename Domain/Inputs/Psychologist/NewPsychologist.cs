@@ -1,6 +1,6 @@
 ﻿namespace Domain.Inputs.Psychologist
 {
-	public class NovoPsicologo
+	public class NewPsychologist
 	{
         public string Nome { get; set; }
 

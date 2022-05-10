@@ -36,7 +36,7 @@ namespace Front.Pages
                 _showErrorAlert = false;
                 _showSuccessAlert = false;
 
-                var novoPsicologo = new NovoPsicologo
+                var novoPsicologo = new NewPsychologist
                 {
                     Abordagem = Abordagem, 
                     AprovadoEPSI = AprovadoEPSI,

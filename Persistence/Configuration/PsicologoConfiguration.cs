@@ -40,12 +40,10 @@ namespace Persistence.Configuration
 
             builder.Property(e => e.Abordagem)
                 .HasMaxLength(256)
-                .IsRequired()
                 .HasColumnType("varchar(256)");
 
             builder.Property(e => e.Descricao)
                 .HasMaxLength(256)
-                .IsRequired()
                 .HasColumnType("varchar(256)");
 
             builder.Property(e => e.isActive)

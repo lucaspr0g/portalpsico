@@ -5,11 +5,11 @@ namespace Application.Commands.Psychologist
 {
     public class PsychologistAddCommand : IRequest
     {
-        public PsychologistAddCommand(NovoPsicologo newPsychologist)
+        public PsychologistAddCommand(NewPsychologist newPsychologist)
         {
             NewPsychologist = newPsychologist;
         }
 
-		public NovoPsicologo NewPsychologist { get; }
+		public NewPsychologist NewPsychologist { get; }
 	}
 }
