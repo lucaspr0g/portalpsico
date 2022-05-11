@@ -7,7 +7,7 @@ namespace Application.Validations.Psychologist
     {
         public NewPsychologistValidator()
         {
-            RuleFor(s => s.Nome)
+            RuleFor(s => s.Name)
                 .NotEmpty()
                 .MaximumLength(256);
 
@@ -16,7 +16,7 @@ namespace Application.Validations.Psychologist
                 .MaximumLength(256)
                 .EmailAddress();
 
-            RuleFor(s => s.Estado)
+            RuleFor(s => s.State)
                 .NotEmpty()
                 .MaximumLength(2);
 
@@ -24,10 +24,10 @@ namespace Application.Validations.Psychologist
                 .NotEmpty()
                 .MaximumLength(6);
 
-            RuleFor(s => s.Abordagem)
+            RuleFor(s => s.Approach)
                 .MaximumLength(256);
 
-            RuleFor(s => s.Descricao)
+            RuleFor(s => s.Description)
                 .MaximumLength(256);
         }
     }

@@ -11,6 +11,8 @@ namespace Application.Interfaces
 
         public DbSet<ScheduleBooking> ScheduleBookings { get; set; }
 
+        public DbSet<User> Users { get; set; }
+
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

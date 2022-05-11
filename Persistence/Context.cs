@@ -20,6 +20,8 @@ namespace Persistence
 
         public DbSet<ScheduleBooking> ScheduleBookings { get; set; }
 
+        public DbSet<User> Users { get; set; }
+
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             foreach (var entry in ChangeTracker.Entries<Auditable>())
@@ -57,6 +59,10 @@ namespace Persistence
             modelBuilder.Entity<ScheduleBooking>()
                 .HasKey(e => e.BookingId)
                 .HasName("pkReserva");
+
+            modelBuilder.Entity<User>()
+                .HasKey(e => e.UserId)
+                .HasName("pkUser");
 
             modelBuilder.Entity<Psychologist>()
                 .HasMany(e => e.Schedules)

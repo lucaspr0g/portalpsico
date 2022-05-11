@@ -28,13 +28,13 @@ namespace Application.Commands.Psychologist
 
 			var psicologo = new Domain.Entities.Psychologist
 			{
-				Name = request.NewPsychologist.Nome,
+				Name = request.NewPsychologist.Name,
 				Email = request.NewPsychologist.Email,
-				State = request.NewPsychologist.Estado,
+				State = request.NewPsychologist.State,
 				CRP = request.NewPsychologist.CRP,
-				Approach = request.NewPsychologist.Abordagem,
-				Description = request.NewPsychologist.Descricao,
-				ApprovedEPSI = request.NewPsychologist.AprovadoEPSI
+				Approach = request.NewPsychologist.Approach,
+				Description = request.NewPsychologist.Description,
+				ApprovedEPSI = request.NewPsychologist.ApprovedEPSI
 			};
 
 			var psicologoId = psicologo.GenerateId(false);

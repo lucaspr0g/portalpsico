@@ -10,13 +10,13 @@
 <Loading IsLoading="isProcessing"></Loading>
  
 <div class="row">
-	<input type="text" @bind="@Nome" placeholder="Nome" class="form-control" />
+	<input type="text" @bind="@Name" placeholder="Nome" class="form-control" />
 </div>
 <div class="row">
 	<input type="email" @bind="@Email" placeholder="Email" class="form-control" />
 </div>
 <div class="row">
-	<select @bind="@Estado" class="form-control">
+	<select @bind="@State" class="form-control">
 		<StateSelectOptions></StateSelectOptions>
     </select>
 </div>
@@ -24,13 +24,13 @@
 	<input type="text" @bind="@CRP" placeholder="CRP" class="form-control" />
 </div>
 <div class="row">
-	<input type="text" @bind="@Abordagem" placeholder="Abordagem" class="form-control" />
+	<input type="text" @bind="@Approach" placeholder="Abordagem" class="form-control" />
 </div>
 <div class="row">
-	<input type="text" @bind="@Descricao" placeholder="Descricao" class="form-control" />
+	<input type="text" @bind="@Description" placeholder="Descricao" class="form-control" />
 </div>
 <div class="row">
-	AprovadoEPSI? <input type="checkbox" @bind="AprovadoEPSI" />
+	AprovadoEPSI? <input type="checkbox" @bind="ApprovedEPSI" />
 </div>
 
 <br />

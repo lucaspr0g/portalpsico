@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Persistence.Configuration
 {
-    internal class PsicologoConfiguration : IEntityTypeConfiguration<Psychologist>
+    internal class PsychologistConfiguration : IEntityTypeConfiguration<Psychologist>
     {
         public void Configure(EntityTypeBuilder<Psychologist> builder)
         {
-            builder.ToTable("Psicologo");
+            builder.ToTable("Psychologist");
 
             builder.Property(e => e.PsychologistId)
                 .HasMaxLength(60)

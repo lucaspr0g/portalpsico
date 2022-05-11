@@ -1,0 +1,9 @@
+﻿@page "/cadastro"
+@using Microsoft.AspNetCore.Components
+@inject NavigationManager NavManager
+
+<h3>Cadastro</h3>
+
+<RadzenButton Click=@(args => NavManager.NavigateTo("/psicologos/cadastro")) Text="Psicólogo" ButtonStyle="ButtonStyle.Info" />
+
+<RadzenButton Click=@(args => NavManager.NavigateTo("/usuario/cadastro")) Text="Usuário" ButtonStyle="ButtonStyle.Info" />

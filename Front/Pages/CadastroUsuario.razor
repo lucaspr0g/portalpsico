@@ -1,0 +1,95 @@
+﻿@page "/usuario/cadastro"
+@using Application.Commands.SystemUser.NewUser
+@using Domain.Inputs.User
+@using MediatR
+@using Front.Components
+@inject IMediator mediator
+
+<h3>Cadastro de Usuário</h3>
+
+<DangerAlert Message="@error" ShowAlert="@showError"></DangerAlert>
+<SuccessAlert Message="@message" ShowAlert="@showSucces"></SuccessAlert>
+<Loading IsLoading="isLoading"></Loading>
+
+<div class="row">
+	<input type="text" @bind="@Name" placeholder="Nome" class="form-control" />
+</div>
+<div class="row">
+	<input type="email" @bind="@Email" placeholder="Email" class="form-control" />
+</div>
+<div class="row">
+	<select @bind="@State" class="form-control">
+		<StateSelectOptions></StateSelectOptions>
+	</select>
+</div>
+<div class="row">
+	<RadzenCard>
+		<h4 class="mb-4">Senha</h4>
+		<RadzenPassword Change="@(args => Password = args)" Class="w-100" />
+	</RadzenCard>
+</div>
+<div class="row">
+	<RadzenCard>
+		<h4 class="mb-4">Confirme a senha</h4>
+		<RadzenPassword Change="@(args => ConfirmPassword = args)" Class="w-100" />
+	</RadzenCard>
+</div>
+
+<br />
+
+<button @onclick="Save">Cadastrar</button>
+
+@code {
+	string? error;
+	string? message;
+	bool showError;
+	bool showSucces;
+	bool isLoading = false;
+
+	string? Name;
+	string? Email;
+	string? State;
+	string? Password;
+	string? ConfirmPassword;
+
+	public async Task Save()
+	{
+		showError = false;
+		showSucces = false;
+
+		await ToggleLoading();
+
+		var newUser = new NewUserRequest
+		{
+			Name = Name,
+			Email = Email,
+			Password = Password,
+			ConfirmPassword = ConfirmPassword,
+			State = State
+		};
+
+		try
+		{
+			await mediator.Send(new NewUserCommand(newUser));
+
+			message = "Usuário cadastrado com sucesso.";
+			showSucces = true;
+		}
+		catch (Exception ex)
+		{
+			error = ex.Message;
+			showError = true;
+		}
+		finally
+		{
+			await ToggleLoading();
+		}
+	}
+
+	public async Task ToggleLoading()
+	{
+		isLoading = !isLoading;
+		await Task.Delay(1);
+		StateHasChanged();
+	}
+}

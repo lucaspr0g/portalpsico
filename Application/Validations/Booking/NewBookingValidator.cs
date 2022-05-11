@@ -1,9 +1,9 @@
-﻿using Application.Commands.Booking.NewBooking;
+﻿using Domain.Inputs.Booking;
 using FluentValidation;
 
 namespace Application.Validations.Booking
 {
-    internal class NewBookingValidator : AbstractValidator<NewBooking>
+    internal class NewBookingValidator : AbstractValidator<NewBookingRequest>
     {
         public NewBookingValidator()
         {

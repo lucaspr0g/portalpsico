@@ -1,6 +1,6 @@
-﻿namespace Application.Commands.Booking.NewBooking
+﻿namespace Domain.Inputs.Booking
 {
-    public class NewBooking
+    public class NewBookingRequest
     {
         public string? PsychologistId { get; set; }
 

@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Persistence.Configuration
 {
-    internal class AgendaConfiguration : IEntityTypeConfiguration<Schedule>
+    internal class ScheduleConfiguration : IEntityTypeConfiguration<Schedule>
     {
         public void Configure(EntityTypeBuilder<Schedule> builder)
         {
-            builder.ToTable("Agenda");
+            builder.ToTable("Schedule");
 
             builder.Property(e => e.Day)
                 .IsRequired()

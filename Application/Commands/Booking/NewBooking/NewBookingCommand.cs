@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Domain.Inputs.Booking;
+using MediatR;
 
 namespace Application.Commands.Booking.NewBooking
 {
@@ -6,13 +7,13 @@ namespace Application.Commands.Booking.NewBooking
     {
         public NewBookingCommand(string? psychologistId, DateTime date)
         {
-            NewBooking = new NewBooking
+            NewBooking = new NewBookingRequest
             {
                 PsychologistId = psychologistId,
                 Date = date
             };
         }
 
-        public NewBooking NewBooking { get; }
+        public NewBookingRequest NewBooking { get; }
     }
 }

@@ -13,19 +13,19 @@ namespace Front.Pages
 
         private bool isProcessing = false;
 
-        public string? Nome { get; set; }
+        public string? Name { get; set; }
 
 		public string? Email { get; set; }
 
-		public string? Estado { get; set; }
+		public string? State { get; set; }
 
         public string? CRP { get; set; }
 
-        public string? Abordagem { get; set; }
+        public string? Approach { get; set; }
 
-        public string? Descricao { get; set; }
+        public string? Description { get; set; }
 
-		public bool AprovadoEPSI { get; set; }
+		public bool ApprovedEPSI { get; set; }
 
         public async Task Add()
 		{
@@ -36,18 +36,18 @@ namespace Front.Pages
                 _showErrorAlert = false;
                 _showSuccessAlert = false;
 
-                var novoPsicologo = new NewPsychologist
+                var newPsychologist = new NewPsychologist
                 {
-                    Abordagem = Abordagem, 
-                    AprovadoEPSI = AprovadoEPSI,
+                    Approach = Approach, 
+                    ApprovedEPSI = ApprovedEPSI,
                     CRP = CRP,
-                    Descricao = Descricao,
-                    Estado = Estado,
-                    Nome = Nome,
+                    Description = Description,
+                    State = State,
+                    Name = Name,
                     Email = Email
                 };
 
-                await mediator.Send(new PsychologistAddCommand(novoPsicologo));
+                await mediator.Send(new PsychologistAddCommand(newPsychologist));
 
                 _showSuccessAlert = true;
 			}
