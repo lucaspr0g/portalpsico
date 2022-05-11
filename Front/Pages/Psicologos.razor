@@ -1,4 +1,5 @@
 ﻿@page "/psicologos/{psicologoId}"
+@using Application.Commands.Booking.NewBooking
 @using Application.Queries.Booking.Search
 @using Application.Queries.Psychologist.Search
 @using Domain.Entities
@@ -8,7 +9,8 @@
 @inject IMediator mediator
 @inject NavigationManager navManager
 
-<DangerAlert Message="@_error" ShowAlert="@_showErrorAlert"></DangerAlert>
+<SuccessAlert Message="@success" ShowAlert="@showSuccessAlert"></SuccessAlert>
+<DangerAlert Message="@error" ShowAlert="@showErrorAlert"></DangerAlert>
 
 <Loading IsLoading="_isLoading">
 	<ChildContent>
@@ -65,8 +67,10 @@
 	Psychologist? _psychologist;
 	DateTime Date = DateTime.Today;
 	List<ScheduleOfTheDay>? _schedulesOfTheDay = null;
-	string? _error;
-	bool _showErrorAlert;
+	string? error;
+	string? success;
+	bool showErrorAlert;
+	bool showSuccessAlert;
 
 	[Parameter]
 	public string? PsicologoId { get; set; }
@@ -93,7 +97,7 @@
 		if (!_isLoading)
 			await ToggleLoading();
 
-		_schedulesOfTheDay = await mediator.Send(new BookSearchQuery(PsicologoId, Date));
+		_schedulesOfTheDay = await mediator.Send(new BookingSearchQuery(PsicologoId, Date));
 
 		await ToggleLoading();
 	}
@@ -104,23 +108,33 @@
 
 		try
 		{
-			_error = null;
-			_showErrorAlert = false;
+			error = null;
+			showErrorAlert = false;
+			showSuccessAlert = false;
+			await Task.Delay(1);
 
-			var hour = int.Parse(timeOfDay.Substring(0, 2));
-			var minutes = int.Parse(timeOfDay.Substring(3, 2));
+			var hour = int.Parse(timeOfDay[..2]);
+			var minutes = int.Parse(timeOfDay[3..]);
 
 			var date = Date.AddHours(hour).AddMinutes(minutes);
 
-			await mediator.Send(new BookSearchQuery(PsicologoId, date));
+			await mediator.Send(new NewBookingCommand(PsicologoId, date));
+
+			success = "Horário agendado com sucesso";
+			showSuccessAlert = true;
+			await Task.Delay(1);
+			StateHasChanged();
 		}
 		catch (Exception ex)
 		{
-			_error = ex.Message;
-			_showErrorAlert = true;
+			error = ex.Message;
+			showErrorAlert = true;
+			await Task.Delay(1);
+
+			await ToggleLoading();
 		}
 
-		await ToggleLoading();
+		await Search();
 	}
 
 	private async Task ToggleLoading()

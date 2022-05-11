@@ -2,9 +2,9 @@
 
 namespace Application.Queries.Booking.Search
 {
-    public class BookSearchQuery : IRequest<List<ScheduleOfTheDay>>
+    public class BookingSearchQuery : IRequest<List<ScheduleOfTheDay>>
     {
-        public BookSearchQuery(string? psychologistId, DateTime date)
+        public BookingSearchQuery(string? psychologistId, DateTime date)
         {
             PsychologistId = psychologistId;
             Date = date;

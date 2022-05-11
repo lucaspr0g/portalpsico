@@ -18,7 +18,7 @@
 	<div class="row">
 		<Loading IsLoading="_isLoading">
 			<ChildContent>
-				<GridPsicologos Psicologos="_psicologos"></GridPsicologos>
+				<GridPsicologos Psychologists="_psychologists"></GridPsicologos>
 			</ChildContent>
 		</Loading>
 	</div>
@@ -26,7 +26,7 @@
 
 @code {
 	bool _isLoading = true;
-	List<Psychologist>? _psicologos;
+	List<Psychologist>? _psychologists;
 
 	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{
@@ -42,7 +42,7 @@
 		var name = parameters is null ? default : parameters[0];
 		var state = parameters is null ? default : parameters[1];
 
-		_psicologos = await mediator.Send(new PsychologistSearchQuery(default, name, state));
+		_psychologists = await mediator.Send(new PsychologistSearchQuery(default, name, state));
 
 		await ToggleLoading();
 	}

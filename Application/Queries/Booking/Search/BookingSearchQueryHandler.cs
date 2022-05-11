@@ -3,16 +3,16 @@ using MediatR;
 
 namespace Application.Queries.Booking.Search
 {
-    public class BookSearchQueryHandler : IRequestHandler<BookSearchQuery, List<ScheduleOfTheDay>>
+    public class BookingSearchQueryHandler : IRequestHandler<BookingSearchQuery, List<ScheduleOfTheDay>>
     {
         private readonly IContext _context;
 
-        public BookSearchQueryHandler(IContext context)
+        public BookingSearchQueryHandler(IContext context)
         {
             _context = context;
         }
 
-        public async Task<List<ScheduleOfTheDay>> Handle(BookSearchQuery request, CancellationToken cancellationToken)
+        public async Task<List<ScheduleOfTheDay>> Handle(BookingSearchQuery request, CancellationToken cancellationToken)
         {
             var dayOfTheWeek = request.Date.DayOfWeek.ToString();
 
