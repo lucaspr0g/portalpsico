@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Application.Queries.Psychologist.Search
 {
-    public class PsychologistSearchQuery : IRequest<List<Psicologo>>
+    public class PsychologistSearchQuery : IRequest<List<Domain.Entities.Psychologist>>
     {
         public PsychologistSearchQuery(string? psicologoId, string? name, string? state)
         {
@@ -12,10 +12,10 @@ namespace Application.Queries.Psychologist.Search
             PsicologoId = psicologoId;
         }
 
-        public string PsicologoId { get; set; }
+        public string? PsicologoId { get; }
 
-        public string Name { get; }
+        public string? Name { get; }
 
-        public string State { get; }
+        public string? State { get; }
     }
 }

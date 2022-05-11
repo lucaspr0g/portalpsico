@@ -4,18 +4,18 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Persistence.Configuration
 {
-    internal class PsicologoConfiguration : IEntityTypeConfiguration<Psicologo>
+    internal class PsicologoConfiguration : IEntityTypeConfiguration<Psychologist>
     {
-        public void Configure(EntityTypeBuilder<Psicologo> builder)
+        public void Configure(EntityTypeBuilder<Psychologist> builder)
         {
             builder.ToTable("Psicologo");
 
-            builder.Property(e => e.PsicologoId)
+            builder.Property(e => e.PsychologistId)
                 .HasMaxLength(60)
                 .IsRequired()
                 .HasColumnType("varchar(60)");
 
-            builder.Property(e => e.Nome)
+            builder.Property(e => e.Name)
                 .HasMaxLength(256)
                 .IsRequired()
                 .HasColumnType("varchar(256)");
@@ -24,11 +24,11 @@ namespace Persistence.Configuration
                 .HasMaxLength(256)
                 .HasColumnType("varchar(256)");
 
-            builder.Property(e => e.Senha)
+            builder.Property(e => e.Password)
                 .HasMaxLength(256)
                 .HasColumnType("varchar(256)");
 
-            builder.Property(e => e.Estado)
+            builder.Property(e => e.State)
                 .HasMaxLength(2)
                 .IsRequired()
                 .HasColumnType("varchar(2)");
@@ -38,18 +38,18 @@ namespace Persistence.Configuration
                 .IsRequired()
                 .HasColumnType("varchar(6)");
 
-            builder.Property(e => e.Abordagem)
+            builder.Property(e => e.Approach)
                 .HasMaxLength(256)
                 .HasColumnType("varchar(256)");
 
-            builder.Property(e => e.Descricao)
+            builder.Property(e => e.Description)
                 .HasMaxLength(256)
                 .HasColumnType("varchar(256)");
 
             builder.Property(e => e.isActive)
                 .IsRequired();
 
-            builder.Property(e => e.AprovadoEPSI)
+            builder.Property(e => e.ApprovedEPSI)
                 .IsRequired();
         }
     }

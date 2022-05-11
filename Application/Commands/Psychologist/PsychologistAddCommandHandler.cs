@@ -9,6 +9,7 @@ namespace Application.Commands.Psychologist
 	public class PsychologistAddCommandHandler : IRequestHandler<PsychologistAddCommand>
 	{
 		private readonly IContext _context;
+		private readonly NewPsychologistValidator _validator = new();
 
 		public PsychologistAddCommandHandler(IContext context)
 		{
@@ -20,48 +21,32 @@ namespace Application.Commands.Psychologist
 			if (request.NewPsychologist is null)
 				throw new InvalidRequestException("Invalid request");
 
-			var validator = new NewPsychologistValidator();
-			validator.Validate(request.NewPsychologist);
+			var validatorResult = _validator.Validate(request.NewPsychologist);
 
-			if (string.IsNullOrWhiteSpace(request.NewPsychologist.Nome))
-				throw new InvalidRequestException("Preencha o nome");
+			if (!validatorResult.IsValid)
+				throw new InvalidRequestException(string.Join(" ", validatorResult.Errors));
 
-			if (string.IsNullOrWhiteSpace(request.NewPsychologist.Email))
-				throw new InvalidRequestException("Preencha o email");
-
-			if (string.IsNullOrWhiteSpace(request.NewPsychologist.Estado))
-				throw new InvalidRequestException("Selecione o estado");
-
-			if (string.IsNullOrWhiteSpace(request.NewPsychologist.CRP))
-				throw new InvalidRequestException("Preencha o CRP");
-
-			if (string.IsNullOrWhiteSpace(request.NewPsychologist.Abordagem))
-				throw new InvalidRequestException("Preencha a abordagem");
-
-			if (string.IsNullOrWhiteSpace(request.NewPsychologist.Descricao))
-				throw new InvalidRequestException("Preencha a descrição");
-
-			var psicologo = new Psicologo
+			var psicologo = new Domain.Entities.Psychologist
 			{
-				Nome = request.NewPsychologist.Nome,
+				Name = request.NewPsychologist.Nome,
 				Email = request.NewPsychologist.Email,
-				Estado = request.NewPsychologist.Estado,
+				State = request.NewPsychologist.Estado,
 				CRP = request.NewPsychologist.CRP,
-				Abordagem = request.NewPsychologist.Abordagem,
-				Descricao = request.NewPsychologist.Descricao,
-				AprovadoEPSI = request.NewPsychologist.AprovadoEPSI
+				Approach = request.NewPsychologist.Abordagem,
+				Description = request.NewPsychologist.Descricao,
+				ApprovedEPSI = request.NewPsychologist.AprovadoEPSI
 			};
 
 			var psicologoId = psicologo.GenerateId(false);
 
-			var existsPsicologoId = _context.Psicologos.Any(s => s.PsicologoId == psicologoId);
+			var existsPsicologoId = _context.Psycologists.Any(s => s.PsychologistId == psicologoId);
 
 			if (existsPsicologoId)
 				psicologoId = psicologo.GenerateId(true);
 
-			psicologo.PsicologoId = psicologoId;
+			psicologo.PsychologistId = psicologoId;
 
-			_context.Psicologos.Add(psicologo);
+			_context.Psycologists.Add(psicologo);
 
 			await _context.SaveChangesAsync(cancellationToken);
 

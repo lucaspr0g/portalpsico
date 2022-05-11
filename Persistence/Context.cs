@@ -14,9 +14,11 @@ namespace Persistence
             Configuration = configuration;
         }
 
-        public DbSet<Psicologo> Psicologos { get; set; }
+        public DbSet<Psychologist> Psycologists { get; set; }
 
-        public DbSet<Agenda> Agendas { get; set; }
+        public DbSet<Schedule> Schedules { get; set; }
+
+        public DbSet<ScheduleBooking> ScheduleBookings { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
@@ -44,18 +46,28 @@ namespace Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Psicologo>()
-                .HasKey(e => e.PsicologoId)
+            modelBuilder.Entity<Psychologist>()
+                .HasKey(e => e.PsychologistId)
                 .HasName("pkPsicologo");
 
-            modelBuilder.Entity<Agenda>()
-                .HasKey(e => e.AgendaId)
+            modelBuilder.Entity<Schedule>()
+                .HasKey(e => e.ScheduleId)
                 .HasName("pkAgenda");
 
-            modelBuilder.Entity<Psicologo>()
-                .HasMany(e => e.Agenda)
-                .WithOne(e => e.Psicologo)
+            modelBuilder.Entity<ScheduleBooking>()
+                .HasKey(e => e.BookingId)
+                .HasName("pkReserva");
+
+            modelBuilder.Entity<Psychologist>()
+                .HasMany(e => e.Schedules)
+                .WithOne(e => e.Psychologist)
                 .HasConstraintName("fkpsicologoAgendaId")
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Psychologist>()
+                .HasMany(e => e.ScheduleBookings)
+                .WithOne(e => e.Psycologist)
+                .HasConstraintName("fkpsicologoReservaId")
                 .OnDelete(DeleteBehavior.NoAction);
         }
     }

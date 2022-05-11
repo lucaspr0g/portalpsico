@@ -1,17 +1,132 @@
 ﻿@page "/psicologos/{psicologoId}"
+@using Application.Queries.Booking.Search
+@using Application.Queries.Psychologist.Search
+@using Domain.Entities
 @using MediatR
+@using Front.Components
+@using BlazorPro.Spinkit;
 @inject IMediator mediator
 @inject NavigationManager navManager
 
-@if (_psicologo != null)
-{
-	<h3>@_psicologo.Nome</h3>
-	<br />
-	<br />
-	<h3>Descrição</h3>
-	<h3>@_psicologo.Descricao</h3>
-	<br />
-	<br />
-	<h3>Horários disponíveis</h3>
+<DangerAlert Message="@_error" ShowAlert="@_showErrorAlert"></DangerAlert>
 
+<Loading IsLoading="_isLoading">
+	<ChildContent>
+		@if (_psychologist is null)
+		{
+			<p>nao achou</p>
+		}
+		else
+		{
+			<h3>@_psychologist.Name</h3>
+			<br />
+			<br />
+			<h3>Descrição</h3>
+			<h3>@_psychologist.Description</h3>
+			<br />
+			<br />
+			<h3>Horários disponíveis</h3>
+			<RadzenCard>
+				<RadzenDatePicker @bind-Value=@Date DateFormat="d" Change=@(args => Search()) Class="w-100" />
+			</RadzenCard>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Horário</th>
+					</tr>
+				</thead>
+				<tbody>
+					@if (_schedulesOfTheDay != null)
+					{
+						@foreach (var schedule in _schedulesOfTheDay)
+						{
+							<tr>
+								<td>
+									@if (schedule.IsBooked)
+									{
+										<RadzenButton Text="@schedule.TimeOfDay" ButtonStyle="ButtonStyle.Danger" Disabled="true" />
+									}
+									else
+									{
+										<RadzenButton Click=@(args => Book(schedule.TimeOfDay)) Text="@schedule.TimeOfDay" ButtonStyle="ButtonStyle.Info" />
+									}
+								</td>
+							</tr>
+						}
+					}
+				</tbody>
+			</table>
+		}
+	</ChildContent>
+</Loading>
+
+@code {
+	bool _isLoading = true;
+	Psychologist? _psychologist;
+	DateTime Date = DateTime.Today;
+	List<ScheduleOfTheDay>? _schedulesOfTheDay = null;
+	string? _error;
+	bool _showErrorAlert;
+
+	[Parameter]
+	public string? PsicologoId { get; set; }
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (firstRender)
+		{
+			await LoadPsycologistInformation();
+			await Search();
+		}
+	}
+
+	public async Task LoadPsycologistInformation()
+	{
+		if (!_isLoading)
+			await ToggleLoading();
+
+		_psychologist = (await mediator.Send(new PsychologistSearchQuery(PsicologoId, default, default)))?.FirstOrDefault();
+	}
+
+	public async Task Search()
+	{
+		if (!_isLoading)
+			await ToggleLoading();
+
+		_schedulesOfTheDay = await mediator.Send(new BookSearchQuery(PsicologoId, Date));
+
+		await ToggleLoading();
+	}
+
+	public async Task Book(string timeOfDay)
+	{
+		await ToggleLoading();
+
+		try
+		{
+			_error = null;
+			_showErrorAlert = false;
+
+			var hour = int.Parse(timeOfDay.Substring(0, 2));
+			var minutes = int.Parse(timeOfDay.Substring(3, 2));
+
+			var date = Date.AddHours(hour).AddMinutes(minutes);
+
+			await mediator.Send(new BookSearchQuery(PsicologoId, date));
+		}
+		catch (Exception ex)
+		{
+			_error = ex.Message;
+			_showErrorAlert = true;
+		}
+
+		await ToggleLoading();
+	}
+
+	private async Task ToggleLoading()
+	{
+		_isLoading = !_isLoading;
+		await Task.Delay(1);
+		StateHasChanged();
+	}
 }

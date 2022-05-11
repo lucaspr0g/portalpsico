@@ -4,37 +4,19 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Persistence.Configuration
 {
-    internal class AgendaConfiguration : IEntityTypeConfiguration<Agenda>
+    internal class AgendaConfiguration : IEntityTypeConfiguration<Schedule>
     {
-        public void Configure(EntityTypeBuilder<Agenda> builder)
+        public void Configure(EntityTypeBuilder<Schedule> builder)
         {
             builder.ToTable("Agenda");
 
-            builder.Property(e => e.Domingo)
-                .HasMaxLength(5)
-                .HasColumnType("varchar(5)");
+            builder.Property(e => e.Day)
+                .IsRequired()
+                .HasMaxLength(10)
+                .HasColumnType("varchar(10)");
 
-            builder.Property(e => e.Segunda)
-                .HasMaxLength(5)
-                .HasColumnType("varchar(5)");
-
-            builder.Property(e => e.Terça)
-                .HasMaxLength(5)
-                .HasColumnType("varchar(5)");
-
-            builder.Property(e => e.Quarta)
-                .HasMaxLength(5)
-                .HasColumnType("varchar(5)");
-
-            builder.Property(e => e.Quinta)
-                .HasMaxLength(5)
-                .HasColumnType("varchar(5)");
-
-            builder.Property(e => e.Sexta)
-                .HasMaxLength(5)
-                .HasColumnType("varchar(5)");
-
-            builder.Property(e => e.Sabado)
+            builder.Property(e => e.Time)
+                .IsRequired()
                 .HasMaxLength(5)
                 .HasColumnType("varchar(5)");
         }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
@@ -10,25 +11,26 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20220511012831_refactor-names")]
+    partial class refactornames
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "6.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("Domain.Entities.Psychologist", b =>
+            modelBuilder.Entity("Domain.Entities.Psycologist", b =>
                 {
-                    b.Property<string>("PsychologistId")
+                    b.Property<string>("PsicologoId")
                         .HasColumnType("varchar(255)");
 
-                    b.Property<string>("Approach")
+                    b.Property<string>("Abordagem")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<bool>("ApprovedEPSI")
+                    b.Property<bool>("AprovadoEPSI")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("CRP")
@@ -38,31 +40,31 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("Description")
+                    b.Property<string>("Descricao")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Email")
                         .HasColumnType("longtext");
 
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Password")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("State")
-                        .IsRequired()
+                    b.Property<string>("Senha")
                         .HasColumnType("longtext");
 
                     b.Property<bool>("isActive")
                         .HasColumnType("tinyint(1)");
 
-                    b.HasKey("PsychologistId")
+                    b.HasKey("PsicologoId")
                         .HasName("pkPsicologo");
 
                     b.ToTable("Psycologists");
@@ -70,30 +72,30 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Schedule", b =>
                 {
-                    b.Property<int>("ScheduleId")
+                    b.Property<int>("AgendaId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("Day")
+                    b.Property<string>("Dia")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Horario")
                         .HasColumnType("longtext");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("PsychologistId")
+                    b.Property<string>("PsicologoId")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
-                    b.Property<string>("Time")
-                        .HasColumnType("longtext");
-
-                    b.HasKey("ScheduleId")
+                    b.HasKey("AgendaId")
                         .HasName("pkAgenda");
 
-                    b.HasIndex("PsychologistId");
+                    b.HasIndex("PsicologoId");
 
                     b.ToTable("Schedules");
                 });
@@ -127,20 +129,20 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Schedule", b =>
                 {
-                    b.HasOne("Domain.Entities.Psychologist", "Psychologist")
-                        .WithMany("Schedules")
-                        .HasForeignKey("PsychologistId")
+                    b.HasOne("Domain.Entities.Psycologist", "Psicologo")
+                        .WithMany("Agendas")
+                        .HasForeignKey("PsicologoId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
                         .HasConstraintName("fkpsicologoAgendaId");
 
-                    b.Navigation("Psychologist");
+                    b.Navigation("Psicologo");
                 });
 
             modelBuilder.Entity("Domain.Entities.ScheduleBooking", b =>
                 {
-                    b.HasOne("Domain.Entities.Psychologist", "Psycologist")
-                        .WithMany("ScheduleBookings")
+                    b.HasOne("Domain.Entities.Psycologist", "Psycologist")
+                        .WithMany("Reservas")
                         .HasForeignKey("PsycologistId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
@@ -149,11 +151,11 @@ namespace Persistence.Migrations
                     b.Navigation("Psycologist");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Psychologist", b =>
+            modelBuilder.Entity("Domain.Entities.Psycologist", b =>
                 {
-                    b.Navigation("ScheduleBookings");
+                    b.Navigation("Agendas");
 
-                    b.Navigation("Schedules");
+                    b.Navigation("Reservas");
                 });
 #pragma warning restore 612, 618
         }

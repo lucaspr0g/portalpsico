@@ -1,35 +1,37 @@
 ﻿namespace Domain.Entities
 {
-    public class Psicologo : Auditable
+    public class Psychologist : Auditable
     {
 		private const string Space = " ";
 		private const string Dash = "-";
 
-		public string PsicologoId { get; set; }
+		public string PsychologistId { get; set; }
 
-        public string Nome { get; set; }
+        public string Name { get; set; }
 
 		public string? Email { get; set; }
 
-		public string? Senha { get; set; }
+		public string? Password { get; set; }
 
-		public string Estado { get; set; }
+		public string State { get; set; }
 
         public string CRP { get; set; }
 
-        public string Abordagem { get; set; }
+        public string Approach { get; set; }
 
-        public string Descricao { get; set; }
+        public string Description { get; set; }
 
         public bool isActive { get; set; }
 
-        public bool AprovadoEPSI { get; set; }
+        public bool ApprovedEPSI { get; set; }
 
-        public List<Agenda>? Agenda { get; set; }
+        public List<Schedule>? Schedules { get; set; }
+
+        public List<ScheduleBooking> ScheduleBookings { get; set; }
 
         public string GenerateId(bool addRandomNumber)
 		{
-            var splitedName = Nome.Split(Space);
+            var splitedName = Name.Split(Space);
             var lastName = splitedName[splitedName.Length - 1];
 
             if (addRandomNumber)
